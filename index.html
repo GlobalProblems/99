@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Problems - Raising Awareness</title>
+    <title>Global Problems - Complete Solution</title>
     <style>
-        /* Global Styles */
+        /* ===== GLOBAL STYLES ===== */
         :root {
             --dark-blue: #0A2463;
             --white: #FFFFFF;
@@ -14,16 +14,27 @@
             --dark-gray: #333333;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--white);
             color: var(--dark-gray);
             line-height: 1.6;
         }
 
-        /* Header */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ===== HEADER ===== */
         header {
             background-color: var(--dark-blue);
             color: var(--white);
@@ -32,12 +43,6 @@
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-
-        .container {
-            width: 85%;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .header-content {
@@ -67,13 +72,16 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
         }
 
-        nav ul li a:hover {
+        nav ul li a:hover, nav ul li a.active {
             color: var(--gold);
+            border-bottom: 2px solid var(--gold);
         }
 
-        /* Hero Section */
+        /* ===== HERO SECTION ===== */
         .hero {
             background: linear-gradient(rgba(10, 36, 99, 0.8), rgba(10, 36, 99, 0.8)), 
                         url('https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
@@ -112,7 +120,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Main Content */
+        /* ===== MAIN CONTENT ===== */
         .main {
             padding: 3rem 0;
         }
@@ -133,6 +141,7 @@
             margin: 0.5rem auto 0;
         }
 
+        /* ===== ARTICLE GRID ===== */
         .articles {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -196,7 +205,62 @@
             color: var(--gold);
         }
 
-        /* Newsletter */
+        /* ===== BLOG PAGE STYLES ===== */
+        .blog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .blog-article {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .blog-title {
+            color: var(--dark-blue);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-meta {
+            color: #666;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .blog-content {
+            line-height: 1.8;
+        }
+        
+        .blog-content h3 {
+            color: var(--dark-blue);
+            margin-top: 2rem;
+        }
+        
+        .blog-content img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--dark-blue);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-to-blog:hover {
+            color: var(--gold);
+        }
+
+        /* ===== NEWSLETTER ===== */
         .newsletter {
             background-color: var(--dark-blue);
             color: var(--white);
@@ -211,6 +275,7 @@
         .newsletter-form {
             max-width: 500px;
             margin: 0 auto;
+            display: flex;
         }
 
         .newsletter-form input {
@@ -218,6 +283,7 @@
             padding: 0.8rem;
             border: none;
             border-radius: 4px 0 0 4px;
+            font-size: 1rem;
         }
 
         .newsletter-form button {
@@ -230,13 +296,14 @@
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 1rem;
         }
 
         .newsletter-form button:hover {
             background-color: var(--white);
         }
 
-        /* Footer */
+        /* ===== FOOTER ===== */
         footer {
             background-color: var(--dark-blue);
             color: var(--white);
@@ -253,6 +320,7 @@
             margin: 0 0.5rem;
             font-size: 1.5rem;
             transition: color 0.3s;
+            text-decoration: none;
         }
 
         .social-links a:hover {
@@ -265,7 +333,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Responsive Design */
+        /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -285,6 +353,10 @@
                 font-size: 2.2rem;
             }
 
+            .newsletter-form {
+                flex-direction: column;
+            }
+
             .newsletter-form input,
             .newsletter-form button {
                 width: 100%;
@@ -295,47 +367,33 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">Global Problems</a>
                 <nav>
                     <ul>
-                        <li><a href="<nav>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
-">Home</a></li>
-                        <li><a href="<a href="mailto:your-email@globalproblems.com?subject=Issue%20Report" class="issue-button">Report an Issue</a>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
-<style>
-  .issue-button {
-    background-color: #e74c3c;
-    color: white;
-    padding: 10px 16px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-  }
-
-  .issue-button:hover {
-    background-color: #c0392b;
-  }
-</style>
-">Issues</a></li>
-                        <li><a href="#">Solutions</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>p>
-            <a href="#" class="btn">Read Latest Articles</a>
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1>Raising Awareness About Global Challenges</h1>
+            <p>Explore in-depth articles about the most pressing issues facing our world today, from climate change to social inequality.</p>
+            <a href="#blog" class="btn">Read Latest Articles</a>
         </div>
     </section>
 
-    <!-- Main Content -->
+    <!-- ===== MAIN CONTENT ===== -->
     <main class="main">
         <div class="container">
             <h2 class="section-title">Featured Articles</h2>
@@ -352,7 +410,7 @@
                         </div>
                         <h3>The Climate Crisis: What We Can Do Now</h3>
                         <p>Exploring actionable solutions to combat the growing threat of climate change before it's too late.</p>
-                        <a href="#" class="read-more">Read More →</a>
+                        <a href="#climate-article" class="read-more">Read More →</a>
                     </div>
                 </article>
 
@@ -368,7 +426,7 @@
                         </div>
                         <h3>Global Poverty: Breaking the Cycle</h3>
                         <p>Understanding the systemic causes of poverty and innovative approaches to create lasting change.</p>
-                        <a href="#" class="read-more">Read More →</a>
+                        <a href="#poverty-article" class="read-more">Read More →</a>
                     </div>
                 </article>
 
@@ -384,14 +442,96 @@
                         </div>
                         <h3>Technology for Social Good</h3>
                         <p>How emerging technologies are being used to solve some of the world's most complex problems.</p>
-                        <a href="#" class="read-more">Read More →</a>
+                        <a href="#tech-article" class="read-more">Read More →</a>
                     </div>
                 </article>
             </div>
         </div>
     </main>
 
-    <!-- Newsletter -->
+    <!-- ===== BLOG SECTION ===== -->
+    <section id="blog" class="main">
+        <div class="container blog-container">
+            <!-- Article 1 -->
+            <article id="climate-article" class="blog-article">
+                <h1 class="blog-title">The Plastic Pandemic: Oceans Under Siege</h1>
+                <div class="blog-meta">
+                    <span>June 20, 2023</span>
+                    <span>•</span>
+                    <span>10 min read</span>
+                </div>
+                <div class="blog-content">
+                    <img src="https://images.unsplash.com/photo-1588591795084-1770cb3be374?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plastic pollution in ocean">
+                    
+                    <p>Every year, <strong>8 million metric tons</strong> of plastic waste enters our oceans - equivalent to dumping one garbage truck every minute. This crisis is creating "plastic islands" in our seas, the largest being the Great Pacific Garbage Patch, now <strong>twice the size of Texas</strong>.</p>
+                    
+                    <h3>The Impact on Marine Life</h3>
+                    <p>Over 700 marine species are affected by plastic pollution:</p>
+                    <ul>
+                        <li>Sea turtles mistake plastic bags for jellyfish</li>
+                        <li>Whales wash ashore with stomachs full of plastic</li>
+                        <li>Microplastics are found in 90% of seabirds</li>
+                    </ul>
+                    
+                    <h3>What Can We Do?</h3>
+                    <p>Effective solutions require global cooperation:</p>
+                    <ol>
+                        <li><strong>Reduce single-use plastics</strong> through legislation (like the EU's ban on 10 common items)</li>
+                        <li><strong>Improve waste management</strong> in developing nations</li>
+                        <li><strong>Support ocean cleanup</strong> initiatives like The Ocean Cleanup project</li>
+                    </ol>
+                </div>
+            </article>
+            
+            <!-- Article 2 -->
+            <article id="poverty-article" class="blog-article">
+                <h1 class="blog-title">Global Hunger: The Silent Emergency</h1>
+                <div class="blog-meta">
+                    <span>June 15, 2023</span>
+                    <span>•</span>
+                    <span>8 min read</span>
+                </div>
+                <div class="blog-content">
+                    <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hungry child">
+                    
+                    <p>Despite producing enough food to feed everyone, <strong>828 million people</strong> go to bed hungry each night. The 2023 Global Hunger Index shows alarming regression, with conflict, climate change, and COVID-19 reversing decades of progress.</p>
+                    
+                    <h3>Key Statistics</h3>
+                    <ul>
+                        <li>1 in 9 people worldwide are undernourished</li>
+                        <li>45 million children suffer from wasting (acute malnutrition)</li>
+                        <li>Conflict accounts for 60% of food insecurity cases</li>
+                    </ul>
+                </div>
+            </article>
+            
+            <!-- Article 3 -->
+            <article id="tech-article" class="blog-article">
+                <h1 class="blog-title">Technology for Social Good</h1>
+                <div class="blog-meta">
+                    <span>June 10, 2023</span>
+                    <span>•</span>
+                    <span>12 min read</span>
+                </div>
+                <div class="blog-content">
+                    <img src="https://images.unsplash.com/photo-1581093196277-1e31650a1c75?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Technology">
+                    
+                    <p>From AI diagnosing diseases to blockchain tracking aid distribution, technology is revolutionizing how we address global challenges.</p>
+                    
+                    <h3>Breakthrough Innovations</h3>
+                    <ul>
+                        <li>Machine learning predicting famine outbreaks</li>
+                        <li>Satellite imagery monitoring deforestation</li>
+                        <li>Mobile apps connecting refugees with services</li>
+                    </ul>
+                </div>
+            </article>
+            
+            <a href="#" class="back-to-blog">↑ Back to Top</a>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
     <section class="newsletter">
         <div class="container">
             <h2>Stay Updated</h2>
@@ -403,7 +543,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <div class="social-links">
@@ -416,7 +556,29 @@
         </div>
     </footer>
 
-    <!-- Font Awesome for icons (optional) -->
+    <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <!-- Simple JavaScript for navigation -->
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Newsletter form handling
+        const form = document.querySelector('.newsletter-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = form.querySelector('input').value;
+            alert(`Thanks for subscribing with ${email}! We'll keep you updated.`);
+            form.reset();
+        });
+    </script>
 </body>
 </html>
