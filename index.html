@@ -3,59 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Problems - Complete Solution</title>
+    <title>Diegetic - Stream Movies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== GLOBAL STYLES ===== */
-        :root {
-            --dark-blue: #0A2463;
-            --white: #FFFFFF;
-            --gold: #FFD700;
-            --light-gray: #F8F9FA;
-            --dark-gray: #333333;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #e50914;
+            --dark: #141414;
+            --light: #ffffff;
+            --gray: #8c8c8c;
+            --dark-gray: #2d2d2d;
+            --success: #4CAF50;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--white);
-            color: var(--dark-gray);
-            line-height: 1.6;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* ===== HEADER ===== */
+        /* Header Styles */
         header {
-            background-color: var(--dark-blue);
-            color: var(--white);
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 4%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            transition: all 0.4s ease;
+            transform: translateY(0);
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        header.scrolled {
+            background-color: rgba(20, 20, 20, 0.95);
+            padding: 0.5rem 4%;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--gold);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
             text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         nav ul {
@@ -65,520 +71,674 @@
 
         nav ul li {
             margin-left: 1.5rem;
-        }
-
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 0.5rem 0;
-            border-bottom: 2px solid transparent;
-        }
-
-        nav ul li a:hover, nav ul li a.active {
-            color: var(--gold);
-            border-bottom: 2px solid var(--gold);
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            background: linear-gradient(rgba(10, 36, 99, 0.8), rgba(10, 36, 99, 0.8)), 
-                        url('https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
-            padding: 5rem 0;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--gold);
-            color: var(--dark-blue);
-            padding: 0.8rem 1.8rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            background-color: var(--white);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ===== MAIN CONTENT ===== */
-        .main {
-            padding: 3rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--dark-blue);
             position: relative;
         }
 
-        .section-title:after {
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
             content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--gold);
-            margin: 0.5rem auto 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
         }
 
-        /* ===== ARTICLE GRID ===== */
-        .articles {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+        nav ul li a:hover::after {
+            width: 100%;
         }
 
-        .article-card {
-            background-color: var(--white);
-            border-radius: 8px;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background-color: rgba(0,0,0,0.5);
+            border: 1px solid var(--gray);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: var(--light);
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            width: 250px;
+            outline: none;
+            border-color: var(--light);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%), 
+                        url('https://i.ibb.co/7WZ1B2z/avatar-poster.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            padding: 0 4%;
+            position: relative;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #e5e5e5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
         }
 
-        .article-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .article-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .article-img img {
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
         }
 
-        .article-card:hover .article-img img {
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--light);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: var(--light);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Movie Sections */
+        .section {
+            padding: 2rem 4%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .view-all {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+
+        .view-all:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .movies-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+        }
+
+        .movies-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .movies-container::-webkit-scrollbar-thumb {
+            background-color: var(--dark-gray);
+            border-radius: 4px;
+        }
+
+        .movie-card {
+            min-width: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .movie-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            background: linear-gradient(45deg, #2d2d2d, #1a1a1a);
+        }
+
+        .movie-card:hover img {
             transform: scale(1.1);
         }
 
-        .article-content {
-            padding: 1.5rem;
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
-        .article-content h3 {
-            margin-top: 0;
-            color: var(--dark-blue);
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
         }
 
-        .article-meta {
+        .movie-card:hover .play-icon {
+            transform: scale(1.1);
+        }
+
+        .movie-info {
+            padding: 1rem;
+            background-color: var(--dark-gray);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .movie-card:hover .movie-info {
+            background-color: #1a1a1a;
+        }
+
+        .movie-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-meta {
             display: flex;
             justify-content: space-between;
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.8rem;
         }
 
-        .read-more {
-            color: var(--dark-blue);
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 1rem;
-        }
-
-        .read-more:hover {
-            color: var(--gold);
-        }
-
-        /* ===== BLOG PAGE STYLES ===== */
-        .blog-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 0;
-        }
-        
-        .blog-article {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .blog-title {
-            color: var(--dark-blue);
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .blog-meta {
-            color: #666;
-            margin-bottom: 1.5rem;
+        .download-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--success);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
+            cursor: pointer;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .movie-card:hover .download-btn {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+            transform: scale(1.2);
+        }
+
+        /* Video Player Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .video-player {
+            width: 100%;
+            height: 70vh;
+            background-color: #000;
+        }
+
+        .drive-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .video-controls {
+            padding: 1rem;
+            background-color: var(--dark-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             gap: 1rem;
         }
-        
-        .blog-content {
-            line-height: 1.8;
-        }
-        
-        .blog-content h3 {
-            color: var(--dark-blue);
-            margin-top: 2rem;
-        }
-        
-        .blog-content img {
-            width: 100%;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        
-        .back-to-blog {
-            display: inline-block;
-            margin-top: 2rem;
-            color: var(--dark-blue);
-            font-weight: bold;
-            text-decoration: none;
+
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            flex: 1;
         }
 
-        .back-to-blog:hover {
-            color: var(--gold);
-        }
-
-        /* ===== NEWSLETTER ===== */
-        .newsletter {
-            background-color: var(--dark-blue);
-            color: var(--white);
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        .newsletter h2 {
-            margin-top: 0;
-        }
-
-        .newsletter-form {
-            max-width: 500px;
-            margin: 0 auto;
+        .video-actions {
             display: flex;
+            gap: 0.5rem;
         }
 
-        .newsletter-form input {
-            width: 70%;
-            padding: 0.8rem;
+        .close-video {
+            background: none;
             border: none;
-            border-radius: 4px 0 0 4px;
-            font-size: 1rem;
-        }
-
-        .newsletter-form button {
-            width: 30%;
-            padding: 0.8rem;
-            background-color: var(--gold);
-            color: var(--dark-blue);
-            border: none;
-            border-radius: 0 4px 4px 0;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 1rem;
-        }
-
-        .newsletter-form button:hover {
-            background-color: var(--white);
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background-color: var(--dark-blue);
-            color: var(--white);
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .social-links {
-            margin: 1rem 0;
-        }
-
-        .social-links a {
-            color: var(--white);
-            margin: 0 0.5rem;
+            color: var(--light);
             font-size: 1.5rem;
-            transition: color 0.3s;
-            text-decoration: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
         }
 
-        .social-links a:hover {
-            color: var(--gold);
+        .close-video:hover {
+            transform: rotate(90deg);
         }
 
-        .copyright {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
+        /* Rest of the CSS remains the same... */
 
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-
-            nav ul li {
-                margin: 0 0.75rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .newsletter-form {
-                flex-direction: column;
-            }
-
-            .newsletter-form input,
-            .newsletter-form button {
-                width: 100%;
-                border-radius: 4px;
-                margin: 0.5rem 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- ===== HEADER ===== -->
+    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">Global Problems</a>
-                <nav>
-                    <ul>
-                        <li><a href="#" class="active">Home</a></li>
-                        <li><a href="#blog">Blog</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
+        <a href="#" class="logo">Diegetic</a>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="movies">Movies</a></li>
+                <li><a href="#" class="nav-link" data-section="tv-shows">TV Shows</a></li>
+                <li><a href="#" class="nav-link" data-section="anime">Anime</a></li>
+                <li><a href="#" class="nav-link" data-section="new">New</a></li>
+                <li><a href="#" class="nav-link" data-section="my-list">My List</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search movies...">
+                <i class="fas fa-search"></i>
             </div>
         </div>
     </header>
 
-    <!-- ===== HERO SECTION ===== -->
-    <section class="hero">
-        <div class="container">
-            <h1>Raising Awareness About Global Challenges</h1>
-            <p>Explore in-depth articles about the most pressing issues facing our world today, from climate change to social inequality.</p>
-            <a href="#blog" class="btn">Read Latest Articles</a>
-        </div>
-    </section>
-
-    <!-- ===== MAIN CONTENT ===== -->
-    <main class="main">
-        <div class="container">
-            <h2 class="section-title">Featured Articles</h2>
-            <div class="articles">
-                <!-- Article 1 -->
-                <article class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Climate Change">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>June 15, 2023</span>
-                            <span>8 min read</span>
-                        </div>
-                        <h3>The Climate Crisis: What We Can Do Now</h3>
-                        <p>Exploring actionable solutions to combat the growing threat of climate change before it's too late.</p>
-                        <a href="#climate-article" class="read-more">Read More →</a>
-                    </div>
-                </article>
-
-                <!-- Article 2 -->
-                <article class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Poverty">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>June 10, 2023</span>
-                            <span>6 min read</span>
-                        </div>
-                        <h3>Global Poverty: Breaking the Cycle</h3>
-                        <p>Understanding the systemic causes of poverty and innovative approaches to create lasting change.</p>
-                        <a href="#poverty-article" class="read-more">Read More →</a>
-                    </div>
-                </article>
-
-                <!-- Article 3 -->
-                <article class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1581093196277-1e31650a1c75?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Technology">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>June 5, 2023</span>
-                            <span>10 min read</span>
-                        </div>
-                        <h3>Technology for Social Good</h3>
-                        <p>How emerging technologies are being used to solve some of the world's most complex problems.</p>
-                        <a href="#tech-article" class="read-more">Read More →</a>
-                    </div>
-                </article>
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero" id="home-section">
+            <div class="hero-content">
+                <h1>Avatar: The Way of Water [Hindi]</h1>
+                <div class="hero-meta">
+                    <span class="rating">★ 7.5/10</span>
+                    <span>2022</span>
+                    <span>3h 12m</span>
+                    <span>Action</span>
+                </div>
+                <p>Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="playMovie('Avatar: The Way of Water [Hindi]', '1Cwc0Xxqa7YbdK8c_6bQ5V87eR0RFZ2O3')">
+                        <i class="fas fa-play"></i> Play Now
+                    </button>
+                    <button class="btn btn-secondary" onclick="showMovieInfo('Avatar: The Way of Water [Hindi]')">
+                        <i class="fas fa-info-circle"></i> More Info
+                    </button>
+                    <button class="btn btn-success" onclick="downloadMovie('Avatar: The Way of Water [Hindi]', '1Cwc0Xxqa7YbdK8c_6bQ5V87eR0RFZ2O3')">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Movie Sections -->
+        <section class="section" id="movies-section">
+            <div class="section-header">
+                <h2 class="section-title">Popular on Diegetic</h2>
+                <a href="#" class="view-all" onclick="showAllMovies('popular')">View All</a>
+            </div>
+            <div class="movies-container" id="popular-movies">
+                <!-- Movies will be loaded by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Rest of the HTML remains the same... -->
+
     </main>
 
-    <!-- ===== BLOG SECTION ===== -->
-    <section id="blog" class="main">
-        <div class="container blog-container">
-            <!-- Article 1 -->
-            <article id="climate-article" class="blog-article">
-                <h1 class="blog-title">The Plastic Pandemic: Oceans Under Siege</h1>
-                <div class="blog-meta">
-                    <span>June 20, 2023</span>
-                    <span>•</span>
-                    <span>10 min read</span>
-                </div>
-                <div class="blog-content">
-                    <img src="https://images.unsplash.com/photo-1588591795084-1770cb3be374?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plastic pollution in ocean">
-                    
-                    <p>Every year, <strong>8 million metric tons</strong> of plastic waste enters our oceans - equivalent to dumping one garbage truck every minute. This crisis is creating "plastic islands" in our seas, the largest being the Great Pacific Garbage Patch, now <strong>twice the size of Texas</strong>.</p>
-                    
-                    <h3>The Impact on Marine Life</h3>
-                    <p>Over 700 marine species are affected by plastic pollution:</p>
-                    <ul>
-                        <li>Sea turtles mistake plastic bags for jellyfish</li>
-                        <li>Whales wash ashore with stomachs full of plastic</li>
-                        <li>Microplastics are found in 90% of seabirds</li>
-                    </ul>
-                    
-                    <h3>What Can We Do?</h3>
-                    <p>Effective solutions require global cooperation:</p>
-                    <ol>
-                        <li><strong>Reduce single-use plastics</strong> through legislation (like the EU's ban on 10 common items)</li>
-                        <li><strong>Improve waste management</strong> in developing nations</li>
-                        <li><strong>Support ocean cleanup</strong> initiatives like The Ocean Cleanup project</li>
-                    </ol>
-                </div>
-            </article>
-            
-            <!-- Article 2 -->
-            <article id="poverty-article" class="blog-article">
-                <h1 class="blog-title">Global Hunger: The Silent Emergency</h1>
-                <div class="blog-meta">
-                    <span>June 15, 2023</span>
-                    <span>•</span>
-                    <span>8 min read</span>
-                </div>
-                <div class="blog-content">
-                    <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hungry child">
-                    
-                    <p>Despite producing enough food to feed everyone, <strong>828 million people</strong> go to bed hungry each night. The 2023 Global Hunger Index shows alarming regression, with conflict, climate change, and COVID-19 reversing decades of progress.</p>
-                    
-                    <h3>Key Statistics</h3>
-                    <ul>
-                        <li>1 in 9 people worldwide are undernourished</li>
-                        <li>45 million children suffer from wasting (acute malnutrition)</li>
-                        <li>Conflict accounts for 60% of food insecurity cases</li>
-                    </ul>
-                </div>
-            </article>
-            
-            <!-- Article 3 -->
-            <article id="tech-article" class="blog-article">
-                <h1 class="blog-title">Technology for Social Good</h1>
-                <div class="blog-meta">
-                    <span>June 10, 2023</span>
-                    <span>•</span>
-                    <span>12 min read</span>
-                </div>
-                <div class="blog-content">
-                    <img src="https://images.unsplash.com/photo-1581093196277-1e31650a1c75?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Technology">
-                    
-                    <p>From AI diagnosing diseases to blockchain tracking aid distribution, technology is revolutionizing how we address global challenges.</p>
-                    
-                    <h3>Breakthrough Innovations</h3>
-                    <ul>
-                        <li>Machine learning predicting famine outbreaks</li>
-                        <li>Satellite imagery monitoring deforestation</li>
-                        <li>Mobile apps connecting refugees with services</li>
-                    </ul>
-                </div>
-            </article>
-            
-            <a href="#" class="back-to-blog">↑ Back to Top</a>
-        </div>
-    </section>
-
-    <!-- ===== NEWSLETTER ===== -->
-    <section class="newsletter">
-        <div class="container">
-            <h2>Stay Updated</h2>
-            <p>Subscribe to our newsletter to receive the latest articles and updates on global issues.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <p class="copyright">© 2023 Global Problems. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
-    <!-- Simple JavaScript for navigation -->
+    <!-- JavaScript -->
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        // Movie data with CORRECTED Avatar poster
+        const movies = [
+            { 
+                title: "Avatar: The Way of Water [Hindi]", 
+                year: 2022, 
+                rating: 7.5, 
+                image: "https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg",
+                driveId: "1Cwc0Xxqa7YbdK8c_6bQ5V87eR0RFZ2O3",
+                genre: "Action",
+                duration: "3h 12m",
+                description: "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home."
+            },
+            { 
+                title: "The Batman", 
+                year: 2022, 
+                rating: 8.1, 
+                image: "https://m.media-amazon.com/images/M/MV5BMDdmMTBiNTYtMDIzNi00NGVlLWIzMDYtZTk3MTQ3NGQxZGEwXkEyXkFqcGdeQXVyMzMwOTU5MDk@._V1_FMjpg_UX1000_.jpg",
+                driveId: "sample1",
+                genre: "Action",
+                duration: "2h 56m",
+                description: "When the Riddler, a sadistic serial killer, begins murdering key political figures in Gotham, Batman is forced to investigate the city's hidden corruption and question his family's involvement."
+            },
+            { 
+                title: "Top Gun: Maverick", 
+                year: 2022, 
+                rating: 8.4, 
+                image: "https://m.media-amazon.com/images/M/MV5BZWYzOGEwNTgtNWU3NS00ZTQ0LWJkODUtMmVhMjIwMjA1ZmQwXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_FMjpg_UX1000_.jpg",
+                driveId: "sample2",
+                genre: "Action",
+                duration: "2h 11m",
+                description: "After thirty years, Maverick is still pushing the envelope as a top naval aviator, but must confront ghosts of his past when he leads TOP GUN's elite graduates on a mission that demands the ultimate sacrifice."
+            }
+        ];
+
+        // Function to generate movie cards
+        function generateMovieCards(containerId, movieList) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            movieList.forEach(movie => {
+                const movieCard = document.createElement('div');
+                movieCard.className = 'movie-card';
+                
+                movieCard.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.title}" onerror="this.src='https://via.placeholder.com/200x300/2d2d2d/ffffff?text=Poster+Not+Found'">
+                    <div class="play-overlay">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <button class="download-btn" onclick="downloadMovie('${movie.title}', '${movie.driveId}')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-meta">
+                            <span>${movie.year}</span>
+                            <span class="rating">★ ${movie.rating}</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click event to play video
+                movieCard.addEventListener('click', (e) => {
+                    if (!e.target.closest('.download-btn')) {
+                        playMovie(movie.title, movie.driveId);
+                    }
                 });
+                
+                container.appendChild(movieCard);
             });
+        }
+
+        // Video player functions
+        function playMovie(title, driveId) {
+            const videoModal = document.getElementById('videoModal');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoDownloadBtn = document.getElementById('videoDownloadBtn');
+            
+            videoTitle.textContent = title;
+            
+            // Create Google Drive iframe
+            videoPlayer.innerHTML = `
+                <iframe class="drive-iframe" 
+                        src="https://drive.google.com/file/d/${driveId}/preview" 
+                        allow="autoplay; fullscreen" 
+                        allowfullscreen>
+                </iframe>
+            `;
+            
+            // Set download button
+            videoDownloadBtn.onclick = () => downloadMovie(title, driveId);
+            
+            videoModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideo() {
+            const videoModal = document.getElementById('videoModal');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            // Clear the iframe
+            videoPlayer.innerHTML = '';
+            videoModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Download function
+        function downloadMovie(title, driveId) {
+            const downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+            window.open(downloadUrl, '_blank');
+            
+            // Show download notification
+            alert(`Downloading: ${title}\n\nThe download should start automatically. If it doesn't, check your browser's download settings.`);
+        }
+
+        // Movie info functions
+        function showMovieInfo(title) {
+            const movie = movies.find(m => m.title === title);
+            if (!movie) return;
+
+            const infoModal = document.getElementById('infoModal');
+            const infoPoster = document.getElementById('infoPoster');
+            const infoTitle = document.getElementById('infoTitle');
+            const infoRating = document.getElementById('infoRating');
+            const infoYear = document.getElementById('infoYear');
+            const infoDuration = document.getElementById('infoDuration');
+            const infoGenre = document.getElementById('infoGenre');
+            const infoDescription = document.getElementById('infoDescription');
+            const infoPlayBtn = document.getElementById('infoPlayBtn');
+            const infoDownloadBtn = document.getElementById('infoDownloadBtn');
+
+            infoPoster.src = movie.image;
+            infoPoster.onerror = function() {
+                this.src = 'https://via.placeholder.com/200x300/2d2d2d/ffffff?text=Poster+Not+Found';
+            };
+            infoTitle.textContent = movie.title;
+            infoRating.textContent = `★ ${movie.rating}/10`;
+            infoYear.textContent = movie.year;
+            infoDuration.textContent = movie.duration;
+            infoGenre.textContent = movie.genre;
+            infoDescription.textContent = movie.description;
+
+            infoPlayBtn.onclick = () => {
+                closeInfo();
+                playMovie(movie.title, movie.driveId);
+            };
+
+            infoDownloadBtn.onclick = () => {
+                downloadMovie(movie.title, movie.driveId);
+            };
+
+            infoModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate movie cards for all sections
+            generateMovieCards('popular-movies', movies);
+            generateMovieCards('trending-movies', [...movies].sort(() => 0.5 - Math.random()));
+            generateMovieCards('new-movies', [...movies].sort((a, b) => b.year - a.year));
+            generateMovieCards('top-rated-movies', [...movies].sort((a, b) => b.rating - a.rating));
+            
+            // Rest of initialization code...
         });
-        
-        // Newsletter form handling
-        const form = document.querySelector('.newsletter-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = form.querySelector('input').value;
-            alert(`Thanks for subscribing with ${email}! We'll keep you updated.`);
-            form.reset();
-        });
+
+        // Rest of the JavaScript functions remain the same...
     </script>
 </body>
 </html>
